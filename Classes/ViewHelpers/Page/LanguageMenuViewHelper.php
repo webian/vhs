@@ -69,6 +69,7 @@ class LanguageMenuViewHelper extends AbstractTagBasedViewHelper
             'li'
         );
         $this->registerArgument('defaultIsoFlag', 'string', 'ISO code of the default flag', false, 'gb');
+        $this->registerArgument('defaultIsoCode', 'string', 'ISO code of the default language', false, 'en');
         $this->registerArgument('defaultLanguageLabel', 'string', 'Label for the default language', false, 'English');
         $this->registerArgument('order', 'mixed', 'Orders the languageIds after this list', false, '');
         $this->registerArgument('labelOverwrite', 'mixed', 'Overrides language labels');
@@ -275,10 +276,11 @@ class LanguageMenuViewHelper extends AbstractTagBasedViewHelper
 
         $tempArray[0] = [
             'label' => $this->arguments['defaultLanguageLabel'],
-            'flag' => $this->arguments['defaultIsoFlag']
+            'flag' => $this->arguments['defaultIsoFlag'],
+            'isocode' => $this->arguments['defaultIsoCode'],
         ];
 
-        $select = 'uid,title,flag';
+        $select = 'uid,title,flag,language_isocode';
         $from = 'sys_language';
         $limitLanguages = static::arrayFromArrayOrTraversableOrCSVStatic($this->arguments['languages'] ?? []);
         $limitLanguages = array_filter($limitLanguages);
@@ -293,6 +295,7 @@ class LanguageMenuViewHelper extends AbstractTagBasedViewHelper
             $tempArray[$value['uid']] = [
                 'label' => $value['title'],
                 'flag' => $value['flag'],
+                'isocode' => $value['language_isocode'],
             ];
         }
 
