@@ -765,7 +765,7 @@ class AssetService implements SingletonInterface
             return;
         }
         foreach ($assetCacheFiles as $assetCacheFile) {
-            touch($assetCacheFile, 0);
+            @touch($assetCacheFile, 0);
         }
         static::$cacheCleared = true;
     }
