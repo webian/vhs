@@ -75,6 +75,13 @@ class BrowseViewHelper extends AbstractMenuViewHelper
             'integer',
             'Optional page UID to use as current page. If unspecified, current page UID from globals is used'
         );
+        $this->registerArgument(
+            'prevnextToSection',
+            'boolean',
+            'If set to TRUE, next/prev will link to the first page of the next section / to the last page of the previous section, too',
+            false,
+            false
+        );
     }
 
     /**
@@ -110,6 +117,54 @@ class BrowseViewHelper extends AbstractMenuViewHelper
                 break;
             }
         }
+
+        // !ian: Get prev/next of parent and childrens
+        if (true === (boolean) $this->arguments['prevnextToSection']) {
+            // get first children of next page (recursively)
+//            if (null == $nextUid) {
+//                $rootLineData = $this->pageService->getRootLine($pageUid);
+//                $tmpParentUid = $rootLineData[count($rootLineData) - 1]['pid'];
+//                $parentOfParentUid = $rootLineData[count($rootLineData) - 2]['pid'];
+//                while ($nextUid !== null || (integer) $parentOfParentUid !== (integer) $rootLineData[0]['uid']) {
+//                    $parentOfParentChildrensData = $this->getMenu($parentOfParentUid);
+//                    $parentOfParentChildrensUids = array_keys($parentOfParentChildrensData);
+//                    $parentOfParentChildrensUidCount = count($parentOfParentChildrensUids);
+//                    for ($i = 0; $i < $parentOfParentChildrensUidCount; $i++) {
+//                        if ((integer) $parentOfParentChildrensUids[$i] === (integer) $tmpParentUid) {
+//                            if (isset($parentOfParentChildrensUids[$i + 1])) {
+//                                $nextUid = $parentOfParentChildrensUids[$i + 1];
+//                                $menuData[$nextUid] = $parentOfParentChildrensData[$nextUid];
+//                                break 2;
+//                            }
+//                        }
+//                    }
+//
+//                    $rootLineData = $this->pageService->getRootLine($tmpParentUid);
+//                    $tmpParentUid = $rootLineData[count($rootLineData) - 1]['pid'];
+//                    $parentOfParentUid = $rootLineData[count($rootLineData) - 2]['pid'];
+//                }
+//            }
+//
+//            // get last children of previous page (recursively)
+//            if (null == $prevUid) {
+//                $lastUidOfPrevLastChildren = null;
+//                $lastMenuDataOfPrevLastChildren = [];
+//                $uidOfPrevLastChildren = $prevUid;
+//                $menuDataOfPrevLastChildren = $menuData;
+//                while (null !== $uidOfPrevLastChildren) {
+//                    $lastUidOfPrevLastChildren = $uidOfPrevLastChildren;
+//                    $lastMenuDataOfPrevLastChildren = $menuDataOfPrevLastChildren;
+//
+//                    $menuDataOfPrevLastChildren = $this->getMenu($uidOfPrevLastChildren);
+//                    $pageUidsOfPrevLastChildren = array_keys($menuDataOfPrevLastChildren);
+//                    $uidCountOfPrevLastChildren = count($pageUidsOfPrevLastChildren);
+//                    $uidOfPrevLastChildren = $pageUidsOfPrevLastChildren[$uidCountOfPrevLastChildren - 1];
+//                }
+//                $prevUid = $lastUidOfPrevLastChildren;
+//                $menuData[$prevUid] = $lastMenuDataOfPrevLastChildren[$lastUidOfPrevLastChildren];
+//            }
+        }
+
         $pages = [];
         if (true === (boolean) $this->arguments['renderFirst']) {
             $pages['first'] = $menuData[$firstUid];
