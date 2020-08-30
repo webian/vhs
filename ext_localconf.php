@@ -57,7 +57,7 @@ if (class_exists(\TYPO3\CMS\Core\Configuration\ExtensionConfiguration::class)) {
         \TYPO3\CMS\Core\Configuration\ExtensionConfiguration::class
     )->get('vhs');
 } else {
-    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['vhs']['setup'] = unserialize($_EXTCONF);
+    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['vhs']['setup'] = unserialize($_EXTCONF, ['allowed_classes' => false]);
 }
 
 if (!isset($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['vhs']['setup']['disableAssetHandling']) || !$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['vhs']['setup']['disableAssetHandling']) {
